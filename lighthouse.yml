@@ -52,7 +52,7 @@ services:
       default:
         aliases:
           - eth2
-          - ${NETWORK}-consensus
+          - ${CL_ALIAS:-default-consensus}  # This allows multiple Eth Docker stacks all connected to the same bridge network
     <<: *logging
     entrypoint:
       - docker-entrypoint.sh
@@ -117,7 +117,7 @@ services:
     networks:
       default:
         aliases:
-          - ${VC_ALIAS}
+          - ${VC_ALIAS:-vc}
     <<: *logging
     entrypoint:
       - docker-entrypoint-vc.sh
@@ -218,7 +218,7 @@ services:
     entrypoint:
       - keymanager.sh
       - /var/lib/lighthouse/validators/api-token.txt
-      - ${VC_ALIAS}
+      - ${VC_ALIAS:-vc}
 
   set-cl-prune-marker:
     profiles: ["tools"]
